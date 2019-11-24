@@ -1,6 +1,7 @@
 \documentclass{cpereport}
 \usepackage{tikz}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{hyperref}
 
 \begin{document}
@@ -61,39 +62,33 @@
 \end{definition}
 
 \section{การเรียนรู้เชิงลึก}
-การเรียนรู้เชิงลึก (Deep Learning) คือความพยายามในการจำลองเซลล์ประสามของมนุษย์ให้อยู่ในรูปโมเดลคณิตศาสตร์
+การเรียนรู้เชิงลึก (Deep Learning) คือความพยายามในการจำลองเซลล์ประสามของมนุษย์ให้อยู่ในรูปแบบจำลองคณิตศาสตร์
 ด้วยความเชื่อทางหลักประสาทวิทยา (neurosciences) ว่าความฉลาดของสมองมนุษย์เกิดขึ้นได้จากโครงข่ายประสาทจำนวนมาก
 ที่เชื่อมเข้าถึงกัน \cite{Goodfellow-et-al-2016}
 
 \subsection{เปอร์เซปตรอน (Perceptron)}
 \begin{figure}
     \centering
-    \def\layersep{2.5cm}
-    \begin{tikzpicture}[->,draw=black!70, node distance=\layersep]
-        \tikzstyle{every pin edge}=[<-,shorten <=1pt]
-        \tikzstyle{neuron}=[circle,draw=black!100,minimum size=20pt, outer sep=3pt]
-        \tikzstyle{input}=[rectangle,draw=black!100,minimum size=20pt, outer sep=3pt]
+    \begin{tikzpicture}
+        \def\layersep{2cm}
+        \tikzstyle{neuron}=[circle,draw=black!100,minimum size=24pt, outer sep=3pt]
         \tikzstyle{annot}=[text width=5em, text centered]
-    
+        
+        \node[neuron, pin=left:อคติ $b$] (bias) at (0, 0cm) {$w_0$};
         \foreach \name / \y in {1,...,3}
-            \node[neuron, pin=left:ข้อมูลรับเข้า \y] (I-\name) at (0,-\y) {$w_\y$};
+            \node[neuron, pin=left: ข้อมูลรับเข้า $x_\y$] (I-\name) at (0,-\y) {$w_\y$};
     
         \node[annot] (I-h) at (0, -4) {$\vdots$};
-        \node[neuron, pin=left:ข้อมูลรับเข้า $n$] (I-4) at (0,-5) {$w_n$};
-        \node[neuron, pin=right:อคติ $n$] (bias) at (1*\layersep, -5cm) {b};
+        \node[neuron, pin=left:ข้อมูลรับเข้า $x_n$] (I-4) at (0,-5) {$w_n$};
 
-        \node[neuron] (sum) at (1*\layersep,-3 cm) {$\Sigma$};
-        \node[neuron] (activation) at (3*\layersep,-3 cm) {A};
-        \node[annot] (output) at (4*\layersep, -3cm) {ข้อมูลส่งออก};
+        \node[neuron] (sum) at (1*\layersep,-2 cm) {$\Sigma$};
+        \node[neuron] (activation) at (3.75*\layersep,-2 cm) {$\sigma$};
 
         \foreach \source in {1,...,4}
-            \path (I-\source) edge (sum);
-        \path (bias) edge (sum);
-        \path (sum) edge (activation);
-        \path (activation) edge (output);
-
-        \node[annot,above of=sum, node distance=1cm] (hla) {การคำนวนผลรวม};
-        \node[annot,above of=activation, node distance=1cm] (hla) {ฟังก์ชันกระตุ้น};
+            \draw [->] (I-\source) -- (sum);
+        \draw [->] (bias) -- (sum);
+        \draw [->] (sum) -- (activation) node [midway, above] (SumDesc) {$s = \left(\sum_{i=1}^{N} w_ix_i\right) + w_0$};
+        \draw [->] (activation) -- (5.5*\layersep, -2cm) node [midway, above] (ActDesc) {ส่งออก $y = \sigma(s)$};
     \end{tikzpicture}
     \caption{เปอร์เซปตรอน}
     \label{tikz-perceptron}
@@ -120,40 +115,44 @@ $$ y = f\left(W^TX+b\right) $$
     \item ราคาอสังหาริมทรัพย์จะเพิ่มขึ้นตามที่ดิน โดยเพิ่มขึ้นทุก 10,000 บาทต่อตารางวา
     \item ราคาอสังหาริมทรัพย์จะเพิ่มขึ้นตามจำนวนห้องนอน โดยเพิ่มขึ้นทุก 200,000 บาทต่อห้องนอน
     \item ราคาอสังหาริมทรัพย์จะลดลงตามจำนวนอายุปี โดยลดลงทุก 7,000 บาทต่ออายุของอสังหาริมทัพย์
+    \item ราคากำหนดตรึง (fixed cost) ของอสังหาริมทรัพย์ อยู่ที่ 100,000 บาท
 \end{itemize}
 \noindent
 จะสามารถเขียนเปอร์เซปตรอนเพื่อคาดเดาราคาอสังหาริมทรัพย์ได้โดย
-$$ y = f\left(W^TX+b\right) $$
+$$ y = \sigma\left(W^TX\right) $$
 เมื่อ $W$ ซึ่งเป็นค่าสัมประสิทธิ์แสดงถึงความสัมพันธ์ข้อมูลรับเข้า ซึ่งเขียนได้จากความสัมพันธ์ดังแสดงด้านล่าง
 $$
     W^T = \begin{bmatrix}
-        10000 & 200000 & -7000
+        100000 & 10000 & 200000 & -7000
     \end{bmatrix}
 $$
-$b$ เป็นไบแอส, จะสมมติให้ $b = 0$ (กล่าวโดยละเอียด ในที่นี้ $b$ คือราคาตั้งต้นของบ้าน 0 ห้องนอน พื้นที่ 0 ตารางวา อายุ 0 ปี) และ $f(x) = x$ กล่าวคือเป็นฟังก์ชั่นเชิงเส้น
-
 หากต้องการคาดเดาราคาบ้านที่มี 3 ห้องนอน เนื้อที่ 100 ตารางวา และมีอายุ 7 ปี จะสามารถเขียนเมทริกซ์ $X$ ได้เป็น
-
 $$
     X = \begin{bmatrix}
+        1 \\
         3 \\
         100 \\
         7
     \end{bmatrix}
 $$
-และผลการทำนายราคาบ้านคำนวนได้จาก
+โปรดสังเกตว่า $x_0 = 1$ เนื่องจากผลคูณของเทอม $w_0$ และ $x_0$ เป็นค่าที่เรียกว่าค่าอคติ (bias) ของแบบจำลอง
+
+เนื่องจากเปอร์เซปตรอนตัวนี้ถูกใช้ในการทำนายราคา ซึ่งกล่าวว่ามีความสัมพันธ์กันกับตัวแปรที่กำหนดข้างต้นในเชิงเส้น ดังนั้นจะกล่าวได้ว่าฟังก์ชั่นกระตุ้น (activation function) ที่เลือกใช้ จะเลือกใช้ฟังก์ชั่นเส้นตรง (linear function) $\sigma(x) = x$
+
+ดังนั้น ผลการทำนายราคาบ้านคำนวนได้จาก
 $$
     \begin{aligned}
-        y &= f\left(W^TX+b\right)\\
-        &= f\left(\begin{bmatrix}
-            10000 & 200000 & -7000
+        y &= \sigma\left(W^TX+b\right)\\
+        &= \sigma\left(\begin{bmatrix}
+            100000 & 10000 & 200000 & -7000
         \end{bmatrix} \times \begin{bmatrix}
+            1 \\
             3 \\
             100 \\
             7
         \end{bmatrix}\right)\\
-        &= f(30000 + 20000000 + (-49000)) = f(19981000)\\
-        &= 19981000
+        &= \sigma(100000 + 30000 + 20000000 + (-49000)) = f(20981000)\\
+        &= 20981000
     \end{aligned}
 $$
 
@@ -164,23 +163,26 @@ $$
 \begin{itemize}
     \item $X$ เป็นเมทริกซ์ขนาด $1 \times 2$ กล่าวคือเมื่อรับค่า $x_1, x_2$ เป็นค่า 0 หรือ 1 แทนสัญญาณจริงหรือเท็จแล้ว
         $$X = \begin{bmatrix}
+            1 \\
             a_1 \\
             a_2
         \end{bmatrix}$$
     \item กำหนดค่าของเมทริกซ์ $W$ เป็น
         $$W^T = \begin{bmatrix}
-            1 && 1
+            -2 & 1 & 1
         \end{bmatrix}$$
-    \item กำหนดค่าของไบแอส $b = -2$
-    \item กำหนดฟังก์ชั่น $f(x)$ เป็น step function กล่าวคือ
+    \item กำหนดฟังก์ชั่น $\sigma(x)$ เป็น step function กล่าวคือ
     $$
-        f(x) = \begin{cases}
+        \sigma(x) = \begin{cases}
             1; & x \geq 0\\
             0; & \textrm{ในกรณีอื่น}
         \end{cases}
     $$
 \end{itemize}
-และการสร้าง OR gate สามารถทำได้ในลักษณะเดียวกันโดยเปลี่ยน $b$ เป็น $b = -1$
+และการสร้าง OR gate สามารถทำได้ในลักษณะเดียวกันโดยเปลี่ยนชุดน้ำหนัก เป็น
+        $$W^T = \begin{bmatrix}
+            -1 & 1 & 1
+        \end{bmatrix}$$
 
 \subsection{เปอร์เซปตรอนแบบหลายชั้น (Multi Layer Perceptron)}
 
@@ -243,9 +245,9 @@ $$
 \end{equation*}
 เมื่อจำนวนเปอร์เซปตรอนในชั้นที่ $k$ เขียนแทนด้วย $n_k$
 
-ยกตัวอย่างเช่น เราจะสามารถสร้างประตูสัญญาณ XOR (XOR gate) ได้จากเปอร์เซปตรอนแบบหลายชั้นดังแสดงในรูปที่ \ref{xor-mlp} โดยเลขในแต่ละเปอร์เซปตรอนแทนค่าไบแอส ($b$) และเลขบนเส้นเชื่อมแทนค่าน้ำหนัก ($w$) และกำหนดให้ฟังก์ชั่นกระตุ้น $f$ เป็นฟังก์ชั่นขั้นบันได (step function) กล่าวคือ
+ยกตัวอย่างเช่น เราจะสามารถสร้างประตูสัญญาณ XOR (XOR gate) ได้จากเปอร์เซปตรอนแบบหลายชั้นดังแสดงในรูปที่ \ref{xor-mlp} โดยเลขในแต่ละเปอร์เซปตรอนแทนค่าไบแอส ($b$) และเลขบนเส้นเชื่อมแทนค่าน้ำหนัก ($w$) และกำหนดให้ฟังก์ชั่นกระตุ้น $\sigma$ เป็นฟังก์ชั่นขั้นบันได (step function) กล่าวคือ
 \begin{equation*}
-    f(x) =
+    \sigma(x) =
     \begin{cases}
         1; & x \geq 0\\
         0; & \textrm{ในกรณีอื่น}
@@ -282,6 +284,21 @@ $$
     \label{xor-mlp}
 \end{figure}
 
+\section{ฟังก์ชั่นกระตุ้นและความฉลาดของโครงข่ายประสาทเทียม}
+\subsection{ทฤษฎีบทตัวประมาณฟังก์ชั่นครอบจักรวาล}
+เหตุผลที่โครงข่ายประสาทเทียมสามารถทำงานได้ดี เนื่องจากมีการพิสูจน์ว่าโครงข่ายประสาทเทียมนั้นสามารถทำหน้าที่เป็นตัวประมาณฟังก์ชั่นครอบจักรวาล \cite{hornik_1991} (universal function approximator) กล่าวคือโครงข่ายประสาทเทียม $N: \mathbb{R} ^k \rightarrow \mathbb{R} ^n$ ที่มีความซับซ้อนมากเพียงพอ (ซึ่งจะกล่าวถึงความซับซ้อนนี้ในภายหลัง) สามารถที่จะจำลองฟังก์ชั่น $f: \mathbb{R}^k \rightarrow \mathbb{R}^n$ (กล่าวคือฟังก์ชั่นที่มีโดเมน และเรนจ์ เป็นจำนวนจริงใดๆ ในมิติที่เหมือนกับมิติข้อมูลรับเข้าและข้อมูลส่งออกของโครงข่ายประสาทเทียม $N$) ได้ \cite{Cybenko1989} \cite{Leshno1993} \cite{1910.03344}
+
+Todo: แปะ formal theorem, bounded and unbounded
+
+บทพิสูจน์ของทฤษฎีนี้ทั้งในรูปแบบของกรณีไม่ตีกรอบความกว้าง (unbounded width case) และกรณีตีกรอบความกว้าง (bounded width case) สามารถศึกษาได้จากแหล่งอ้างอิง รวมถึงแหล่งอ้างอิงเพิ่มเติมที่ใช้การแสดงทัศนภาพ (visualisation) เพื่อการพิสูจน์ทฤษฎีบทดังกล่าว \cite{nielsen_1970}
+
+\section{โครงข่ายประสาทเทียมแบบสังวัฒนาการ}
+
+โครงข่ายประสาทเทียมแบบสังวัฒนาการ (Convolutional Neural Networks: CNN)...
+
+\section{การเรียนรู้ด้วยวิธีก้าวเคลื่อนถอยหลัง}
+
+การเรียนรู้ด้วยวิธีก้าวเคลื่อนถอยหลัง (backpropagation learning)...
 \bibliography{references/references} 
 \bibliographystyle{ieeetr}
 \end{document}
