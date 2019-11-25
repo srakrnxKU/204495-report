@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{hyperref}
+\usepackage{pgfplots}
 
 \begin{document}
 \chapter{บทนำ}
@@ -310,6 +311,7 @@ $$
     \begin{itemize} 
         \item \textbf{ชั้นบ่อรวมแบบมากสุด} (maximum pooling layer) เป็นชั้นบ่อรวมที่พบได้บ่อยที่สุด
         \item \textbf{ชั้นบ่อรวมแบบเฉลี่ย} (average pooling layer) เป็นชั้นบ่อรวมที่พบในโครงข่ายประสาทเทียมแบบสังวัฒนาการบางรูปแบบ เช่น LeNet
+        \item \textbf{ชั้นเชื่อมต่อถึงกันหมด} (fully connected layer) ซึ่งมีลักษณะเหมือนเปอร์เซปตรอนแบบหลายชั้นทั่วไป
     \end{itemize}
 \end{itemize}
 
@@ -329,8 +331,81 @@ $$
 
 \section{การเรียนรู้ด้วยวิธีก้าวเคลื่อนถอยหลัง}
 
-การเรียนรู้ด้วยวิธีก้าวเคลื่อนถอยหลัง (backpropagation learning)...
+การเรียนรู้ด้วยวิธีก้าวเคลื่อนถอยหลัง (backpropagation learning) เป็นวิธีการเรียนรู้ที่ได้รับความนิยมมากที่สุดในปัจจุบัน ทั้งนี้ เราอาจพิจารณาการเรียนรู้ถอยหลังได้โดยทำความเข้าใจถึงฟังก์ชันสูญเสีย (loss function) และการปรับค่าตัวแปรเสริม (parameters) ดังนี้
 
+\begin{figure}
+    \centering
+    \def\layersep{2.5cm}
+    \begin{tikzpicture}[->,draw=black!70, node distance=\layersep]
+        \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+        \tikzstyle{neuron}=[circle,draw=black!100,minimum size=17pt, outer sep=3pt]
+        \tikzstyle{annot}=[text width=5em, text centered]
+    
+        \foreach \name / \y in {1,...,4}
+            \node[neuron, pin=left:ข้อมูลรับเข้า \y] (I-\name) at (0,-\y) {};
+    
+        % Draw the hidden layer nodes
+        \foreach \name / \y in {1,...,5}
+            \path[yshift=0.5cm]
+                node[neuron] (HA-\name) at (\layersep,-\y cm) {};
+    
+        \path[yshift=-1.5cm] node[neuron, fill=black!10] (O-1) at (2*\layersep,0 cm) {};
+        \path[yshift=-1.5cm] node[neuron, fill=black!70] (O-2) at (2*\layersep,-1 cm) {};
+        \path[yshift=-1.5cm] node[neuron, fill=black!20] (O-3) at (2*\layersep,-2 cm) {};
+    
+        \path[yshift=-1.5cm] node[neuron, fill=black!0] (T-1) at (3.5*\layersep,0 cm) {};
+        \path[yshift=-1.5cm] node[neuron, fill=black!100] (T-2) at (3.5*\layersep,-1 cm) {};
+        \path[yshift=-1.5cm] node[neuron, fill=black!00] (T-3) at (3.5*\layersep,-2 cm) {};
+
+        \foreach \source in {1,...,4}
+            \foreach \dest in {1,...,5}
+                \path (I-\source) edge (HA-\dest);
+    
+        \foreach \source in {1,...,5}
+            \foreach \dest in {1,...,3}
+                \path (HA-\source) edge (O-\dest);
+
+        \foreach \dest in {1,...,2}
+            \path [<->] (T-\dest) edge (O-\dest);
+        \draw [<->] (T-3) -- (O-3) node [midway, below] (losstext) {คำนวนค่าสูญเสีย};
+
+        \node[annot,above of=I-1, node distance=1cm] (hla) {ชั้นรับเข้า};
+        \node[annot,above of=HA-1, node distance=1cm] (hla) {ชั้นซ่อน};
+        \node[annot,above of=O-1, node distance=1cm] (hlo) {ชั้นส่งออก};
+        \node[annot,above of=T-1, node distance=1cm] (hlt) {คำตอบจริง};
+    \end{tikzpicture}
+    \caption{การคำนวนค่าสูญเสีย}
+    \label{loss}
+\end{figure}
+
+\subsection{ค่าสูญเสีย}
+
+ค่าสูญเสีย (loss) เป็นค่าที่ใช้ในการบอกว่าแบบจำลองใดๆ ตอบผิดมากหรือน้อยเพียงใด โดยค่าสูญเสียยิ่งมาก หมายถึงแบบจำลองตอบผิดมากเท่านั้น
+
+ยกตัวอย่างเช่น หากเราสร้างแบบจำลองที่ต้องการส่งออกค่าเป็นค่าในลักษณะของการเข้ารหัสแบบหนึ่งจุดร้อน (one-hot encoding) ของค่าที่เป็นไปได้ 3 ชั้น (classes) จากข้อมูลตัวที่ i บนชุดฝึกหัด ดังแสดงในรูปที่ \ref{loss} ซึ่งต้องการคำตอบ $t_i$ ที่ถูกต้องเป็น
+$$t_i = 
+\begin{bmatrix}
+    0 & 1 & 0
+\end{bmatrix}
+$$
+ทว่า แบบจำลองกลับให้คำตอบ $o_i$ จากแบบจำลองเป็น
+$$o_i = 
+\begin{bmatrix}
+    0.1 & 0.7 & 0.2
+\end{bmatrix}
+$$
+เราอาจนิยามฟังก์ชันสูญเสียอย่างง่าย เพื่อยกตัวอย่างการคำนวนดังกล่าว โดยกำหนดให้ฟังก์ชันสูญเสียเป็นผลรวมของผลต่างกำลังสอง
+$$
+l_i\left(t_i, o_i\right) = \sum_{j=1}^{n}{\left(t_i[j] - o_i[j]\right)^2}
+$$
+ดังนั้น ในกรณีนี้ จะได้ค่าสูญเสียของจุดฝึกหัดนี้เป็น
+\begin{align*}
+    l_i\left(t_i, o_i\right) &= \sum_{j=1}^{n}{\left(t_i[j] - o_i[j]\right)^2}\\
+    &= \left((0-0.1)^2 + (1-0.7)^2 + (0-0.2)^2\right)
+\end{align*}
+จะเห็นว่า ยิ่งค่า $t_i$ ใกล้เคียง $o_i$ มากขึ้นเท่าใด ค่าสูญเสียก็จะน้อยลงเท่านั้น
+
+อย่างไรก็ตาม ฟังก์ชันสูญเสียในลักษณะดังกล่าว เป็นฟังก์ชันอย่างง่าย ในการฝึกสอนแบบจำลองทั่วไปมักนิยมใช้ฟังก์ชันอื่น เช่นค่าสูญเสียแบบความวุ่นวายข้ามชั้น (cross entropy loss) สำหรับการฝึกสอนแบบจำลองเพื่อการทำการจำแนกหมวดหมู่ (classification)
 \bibliography{references/references} 
 \bibliographystyle{ieeetr}
 \end{document}
