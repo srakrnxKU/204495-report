@@ -19,12 +19,8 @@
 	.st13{fill-rule:evenodd;clip-rule:evenodd;fill:#D5F5E3;}
 	.st14{fill:none;stroke:#2ECC71;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st15{fill:#9BB2C8;}
-	.st16{clip-path:url(#SVGID_2_);}
-	.st17{clip-path:url(#SVGID_4_);}
-	.st18{clip-path:url(#SVGID_6_);}
-	.st19{clip-path:url(#SVGID_10_);}
-	.st20{clip-path:url(#SVGID_12_);}
-	.st21{clip-path:url(#SVGID_14_);}
+	.st16{font-family:'Laksaman';}
+	.st17{font-size:18.5578px;}
 </style>
 <g>
 	<rect x="15.8" y="57" class="st0" width="28.3" height="28.3"/>
@@ -114,83 +110,7 @@
 	<path class="st15" d="M345.8,57.8l-1.4,3.4l5.4-4.3l-6.6-1.7L345.8,57.8z M198,90l148-31.2l-0.4-2L197.6,88L198,90z"/>
 	<path class="st15" d="M347.4,226.3l-1.4-3.4l5.4,4.2l-6.6,1.8L347.4,226.3z M198,194.1l149.6,31.2l-0.4,2l-149.6-31.2L198,194.1z"
 		/>
-	<g>
-		<defs>
-			<rect id="SVGID_1_" x="-147" y="-128" width="960" height="540"/>
-		</defs>
-		<clipPath id="SVGID_2_">
-			<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
-		</clipPath>
-		<g class="st16">
-			<defs>
-				<rect id="SVGID_3_" x="479.1" y="37.2" width="107.6" height="35.3"/>
-			</defs>
-			<clipPath id="SVGID_4_">
-				<use xlink:href="#SVGID_3_"  style="overflow:visible;"/>
-			</clipPath>
-			<g class="st17">
-				<g>
-					<defs>
-						<rect id="SVGID_5_" x="479.1" y="37.2" width="107.6" height="35.3"/>
-					</defs>
-					<clipPath id="SVGID_6_">
-						<use xlink:href="#SVGID_5_"  style="overflow:visible;"/>
-					</clipPath>
-					<g class="st18">
-						<defs>
-							<rect id="SVGID_7_" x="479.1" y="37.2" width="107.6" height="35.3"/>
-						</defs>
-						<clipPath id="SVGID_8_">
-							<use xlink:href="#SVGID_7_"  style="overflow:visible;"/>
-						</clipPath>
-						<g style="clip-path:url(#SVGID_8_);">
-							
-								<image style="overflow:visible;" width="451" height="149" xlink:href="7CD458F.jpg"  transform="matrix(0.24 0 0 0.24 478.92 37.12)">
-							</image>
-						</g>
-					</g>
-				</g>
-			</g>
-		</g>
-	</g>
-	<g>
-		<defs>
-			<rect id="SVGID_9_" x="-147" y="-128" width="960" height="540"/>
-		</defs>
-		<clipPath id="SVGID_10_">
-			<use xlink:href="#SVGID_9_"  style="overflow:visible;"/>
-		</clipPath>
-		<g class="st19">
-			<defs>
-				<rect id="SVGID_11_" x="480.7" y="207.5" width="138.4" height="35.3"/>
-			</defs>
-			<clipPath id="SVGID_12_">
-				<use xlink:href="#SVGID_11_"  style="overflow:visible;"/>
-			</clipPath>
-			<g class="st20">
-				<g>
-					<defs>
-						<rect id="SVGID_13_" x="480.7" y="207.5" width="138.4" height="35.3"/>
-					</defs>
-					<clipPath id="SVGID_14_">
-						<use xlink:href="#SVGID_13_"  style="overflow:visible;"/>
-					</clipPath>
-					<g class="st21">
-						<defs>
-							<rect id="SVGID_15_" x="480.7" y="207.5" width="138.4" height="35.3"/>
-						</defs>
-						<clipPath id="SVGID_16_">
-							<use xlink:href="#SVGID_15_"  style="overflow:visible;"/>
-						</clipPath>
-						<g style="clip-path:url(#SVGID_16_);">
-							
-								<image style="overflow:visible;" width="577" height="148" xlink:href="7CD458D.jpg"  transform="matrix(0.24 0 0 0.24 480.6 207.28)">
-							</image>
-						</g>
-					</g>
-				</g>
-			</g>
-		</g>
-	</g>
 </g>
+<text transform="matrix(1 0 0 1 477.8653 69.1227)" class="st16 st17">ชั้นบ่อรวมมากสุด</text>
+<text transform="matrix(1 0 0 1 477.8654 233.0482)" class="st16 st17">ชั้นบ่อรวมเฉลี่ย</text>
 </svg>
