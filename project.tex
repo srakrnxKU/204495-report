@@ -708,26 +708,23 @@ Madry และคณะ \cite{aleks2017deep} จึงศึกษาขั้�
 \end{algorithm}
 
 \begin{algorithm} 
-    \caption{Cluster-based Retraining}
+    \caption{การเสริมความแข็งแกร่งด้วยวิธีการผสานคลัสเตอร์}
     \label{cluster-retrain}
     \begin{algorithmic}
-        \REQUIRE $M$ as the classifier model
-        \REQUIRE $e$ as the epoches to train
-        \REQUIRE Original training set $X$
-        \REQUIRE $m$ and $n$ as original training point and adversarial training point minibatch sizes respectively
-        \REQUIRE $w$ and $w'$ as original training point and adversarial training point minibatch weights respectively
-        \STATE Generate cluster-based perturbations attacking $M$ on $e$ using Algorithm \ref{cluster-gen}.
-        \FOR{$i=0$ to $e$}
-            \STATE Pick an original training point minibatch $B=\{x_1, x_2, \dots, x_m\}$.
-            \STATE Pick an adversarial training point minibatch $B'=\{x_1', x_2', \dots, x_n'\}$.
-            \STATE Generate adversarial examples $B'=\{x_1', x_2', \dots, x_m'\}$ attacking on $M$ with current parameters $\theta$.
-            \STATE Update the parameter $\theta$ using the weighted loss $w$ on $B$ and $w'$ on $B'$.
+        \REQUIRE $M$ เป็นแบบจำลองการเรียนรู้
+        \REQUIRE $X$ เป็นชุดข้อมูลที่จะทำการโจมตี
+        \REQUIRE $e$ เป็นจำนวนรอบการวนซ้ำ (epoches) ในการฝึกสอน
+        \REQUIRE $m$ และ $n$ เป็นขนาดของชุดฝึกสอนเล็กจิ๋ว (minibatch) บนชุดข้อมูลต้นฉบับและชุดข้อมูลประสงค์ร้าย
+        \REQUIRE $w$ และ $w'$ เป็นน้ำหนักของชุดฝึกสอนเล็กจิ๋ว (minibatch) บนชุดข้อมูลต้นฉบับและชุดข้อมูลประสงค์ร้าย
+        \STATE สร้างสัญญาณรบกวนจากคลัสเตอร์ ที่โจมตีข้อมูล $X$ บนแบบจำลอง $M$ โดยใช้ขั้นตอนวิธี \ref{cluster-gen}.
+        \FOR{$i=1$ ถึง $e$}
+            \STATE สร้างชุดฝึกสอนจิ๋วบนชุดข้อมูลต้นฉบับ $B=\{x_1, x_2, \dots, x_m\}$.
+            \STATE สร้างชุดฝึกสอนจิ๋วบนชุดข้อมูลประสงค์ร้าย $B'=\{x_1', x_2', \dots, x_n'\}$.
+            \STATE ฝึกสอนแบบจำลองแบบถ่วงน้ำหนัก โดยให้น้ำหนัก $w$ บน $B$ และ $w'$ บน $B'$.
         \ENDFOR
         \RETURN $M$ with parameters $\theta$.
     \end{algorithmic}
 \end{algorithm}
-
-\section{}
 
 \bibliography{references} 
 \bibliographystyle{ieeetr}
