@@ -1,1 +1,1 @@
-../projectclsas/cpereport.cls
+template/cpereport.cls
