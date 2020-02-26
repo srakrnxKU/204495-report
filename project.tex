@@ -7,6 +7,35 @@
 \usepackage{pgfplots}
 \usepackage{enumitem}
 \begin{document}
+\pagenumbering{gobble}
+\newgeometry{margin=1in}
+\begin{titlepage}
+    \begin{center}%
+        \includegraphics[width=5cm]{eng-logo.pdf} \par%
+        \vspace{1em}
+        \textbf{\LARGE โครงงานวิศวกรรมคอมพิวเตอร์} \par%
+        \vspace{1em}
+        \textbf{\Large ขั้นตอนวิธีคลัสเตอร์เพื่อเสริมความทนทานต่อการโจมตีแบบจำลองการเรียนรู้เชิงลึก} \par%
+        \textbf{\Large Cluster Method to Strengthen Adversarial Defence on Deep Learning Models} \par%
+        \par%
+        \vskip 15em%
+        {\Large
+            \textbf{นาย ศิระกร ลำใย รหัสนิสิต 5910500023} \par%
+        }%
+        \vfill%
+        \textbf{\Large% 
+            โครงงานวิศวกรรมนี้ เป็นส่วนหนึ่งของการศึกษาตามหลักสูตรวิศวกรรมศาสตรบัณฑิต\\
+            ภาควิชาวิศวกรรมคอมพิวเตอร์\\
+            คณะวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์\\
+            ปีการศึกษา 2562
+        }\par
+    \end{center}\par
+\end{titlepage}
+
+\input{chapters/prequels.tex}
+
+\restoregeometry
+\pagenumbering{arabic}
 
 \chapter*{กิตติกรรมประกาศ}
 \addcontentsline{toc}{chapter}{กิตติกรรมประกาศ}
@@ -30,6 +59,10 @@
 \chapter{ผลการทดลอง}
 
 \input{chapters/chap4.tex}
+
+\chapter{สรุปผลการทดลอง}
+
+\input{chapters/chap5.tex}
 
 \bibliography{references} 
 \bibliographystyle{ieeetr}
