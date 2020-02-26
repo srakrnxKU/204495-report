@@ -32,22 +32,26 @@
         นาย ศิระกร ลำใย รหัสนิสิต 5910500023 \par
     }
     \vfill
+    {\large
     ได้รับการพิจารณาเห็นชอบจากภาควิชาวิศวกรรมคอมพิวเตอร์ให้นับเป็นส่วนหนึ่งของการศึกษา\\
     ตามหลักสูตร วิศวกรรมศาสตรบัณฑิต สาขาวิชาวิศวกรรมคอมพิวเตอร์\\
     มหาวิทยาลัยเกษตรศาสตร์
+    }
     \par
     \end{center}
 
     \noindent
+    {\large
     อาจารย์ที่ปรึกษา \hfill
-    ......................................................................................วันที่ ..... เดือน ................... พ.ศ. ............\\
-    \hspace*{2cm}(ผศ. ดร. จิตร์ทัศน์ ฝักเจริญผล)\\
+    ........................................................วันที่ ..... เดือน ................... พ.ศ. ............\\
+    \hspace*{1cm}(ผศ. ดร. จิตร์ทัศน์ ฝักเจริญผล)\\
     อาจารย์ที่ปรึกษาร่วม \hfill
-    ......................................................................................วันที่ ..... เดือน ................... พ.ศ. ............\\
-    \hspace*{2cm}(ผศ. ดร. ธนาวินท์ รักธรรมานนท์)\\
+    ........................................................วันที่ ..... เดือน ................... พ.ศ. ............\\
+    \hspace*{1cm}(ผศ. ดร. ธนาวินท์ รักธรรมานนท์)\\
     หัวหน้าภาควิชา \hfill
-    ......................................................................................วันที่ ..... เดือน ................... พ.ศ. ............\\
-    \hspace*{2cm}(รศ. ดร. พันธุ์ปิติ เปี่ยมสง่า)
+    ........................................................วันที่ ..... เดือน ................... พ.ศ. ............\\
+    \hspace*{1cm}(รศ. ดร. พันธุ์ปิติ เปี่ยมสง่า)
+    }
 \newpage
 \pagenumbering{roman}
 
@@ -56,10 +60,16 @@
 ปริญญาวิศวกรรมศาสตร์บัณฑิต (สาขาวิศวกรรมคอมพิวเตอร์) ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์ มหาวิทยาลัยเกษตรศาสตร์\\
 อาจารย์ที่ปรึกษาโครงงาน: ผศ.ดร.จิตร์ทัศน์ ฝักเจริญผล
 
+\vskip 5em
+
 \begingroup
 \let\clearpage\relax
 \chapter*{บทคัดย่อ}
 \addcontentsline{toc}{chapter}{บทคัดย่อภาษาไทย}
+
+แบบจำลองจักรกลเรียนรู้ใดๆ แม้จะถูกฝึกสอนเป็นอย่างดี แต่อาจสามารถถูกโจมตีด้วยข้อมูลรับเข้าที่เรียกว่าชุดข้อมูลโจมตีประสงค์ร้ายเพื่อมุ่งหวังให้แบบจำลองให้คำตอบที่ผิดเพี้ยน การโจมตีในลักษณะนี้สามารถทำได้ง่ายในชีวิตจริง ดังนั้นการฝึกสอนแบบจำลองให้ทนทานต่อการโจมตีในลักษณะนี้จึงเป็นสิ่งที่จำเป็น ขั้นตอนวิธีการฝึกสอนสามารถทำได้ด้วยการเพิ่มชุดข้อมูลประสงค์ร้ายเข้าไปในแบบจำลอง ซึ่งจะทำให้แบบจำลองมีความแข็งแกร่งมากยิ่งขึ้น และความแข็งแกร่งของแบบจำลองนั้นขึ้นอยู่กับคุณภาพของข้อมูลประสงค์ร้ายที่เพิ่มเข้าไปด้วยเช่นกัน
+
+งานชิ้นนี้มุ่งเน้นการศึกษาขั้นตอนวิธีสองขั้นตอนสำหรับการโจมตีประสงค์ร้าย ได้แก่ขั้นตอนวิธีเครื่องหมายเกรเดียนต์อย่างเร็ว (FGSM) และขั้นตอนวิธีการฉายเกรเดียนต์ลดหลั่น (PGD) แม้ว่าขั้นตอนวิธี FGSM จะทำงานได้อย่างรวดเร็ว แต่ขุดข้อมูลประสงค์ร้ายที่ได้ออกมาไม่สามารถใช้โจมตีได้อย่างรุนแรงพอ ในทางตรงกันข้ามชุดข้อมูลประสงค์ร้ายที่สร้างจากขั้นตอนวิธี PGD สามารถโจมตีได้อย่างรุนแรงกว่า แต่ต้องแลกมาด้วยเวลาคำนวนที่มากขึ้น งานชิ้นนี้มุ่งเสนอขั้นตอนวิธีอย่างง่ายบนหลักของการคลัสเตอร์ข้อมูลเพื่อศึกษาจุดสมดุลระหว่างวิธีทั้งสองในการใช้สร้างตัวอย่างประสงค์ร้าย ผลการทดลองเสนอให้เห็นขั้นตอนวิธีฝึกสอนแบบจำลองที่ให้ผลทนทานต่อสัญญาณรบกวน PGD เทียบเท่าวิธีอื่น
 \endgroup
 
 \newpage
@@ -69,8 +79,14 @@ Sirakorn Lamyai 2020: Cluster Method to Strengthen Adversarial Defence on Deep L
 Bachelor of Engineering (Computer Engineering), Department of Computer Engineering, Faculty of Engineering, Kasetsart University\\
 Project advisor: Assoc. Prof. Dr. Jittat Fakcharoenphol
 
+\vskip 5em
+
 \begingroup
 \let\clearpage\relax
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
+
+A well-trained accurate machine learning model may suffer from adversarial attacks that can be easily carried out in the real world. Training robust models that withstand adversarial attacks thus becomes an important problem in machine learning. Adversarial training increases model robustness by including adversarial examples during the training. The quality of the model depends on the quality of the added examples.
+
+This work considers two popular methods for adversarial example generation: the Fast Gradient Sign Method (FGSM) and the Projected Gradient Descent (PGD). While FSGM is very efficient, the generated examples are weak against stronger attacking methods, including the examples generated from the PGD. On the other hand, while PGD produces high quality examples, the procedure is time-consuming. In this work, we propose a simple method based on clustering to find a trade-off between the two methods for adversarial example generation. The experimental result in an equally tolerating model to PGD attacks despite the much faster runtime.
 \endgroup
